@@ -47,6 +47,9 @@ private:
 		}
 	} zero_divide;
 
+	//private constructors
+	INT(char sign,vector<char> num);
+
 	//returns true if a > b
 	bool compare(std::vector<char> a,vector<char> b);
 
@@ -105,6 +108,12 @@ public:
 	INT operator * (INT num1);
 	INT operator / (INT num1);
 	INT operator % (INT num1);
+
+	//Increment/Decrement operators
+	INT operator ++();
+	INT operator ++(int);
+//	INT operator --();
+//	INT operator --(int);
 
 	//parses a string expression
 	static INT parse(string exp);

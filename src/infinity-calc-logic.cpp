@@ -16,18 +16,26 @@ using namespace std;
 int main() {
 	auto start = chrono::steady_clock::now();
 	/****************************************************************************************/
+	INT a = "1";
+	for(int i = 0; i < 15; i++){
+		cout<<a++<<endl;
+		cout<<a<<endl;
+	}
 //	INT a= "-99";
 //	INT b = "-1";
 //	cout<<((a>b)?"true":"false");
+//	INT a,b;
+//	cin>>a>>b;
+//	cout<<a<<" "<<b<<endl;
 //	cout<<1(+)2;
-	string str = "8-9-8-5-1-2*5";
+//	string str = "8-9-8-5-1-2*5";
 //	string str = "ftyfjghg";
-	for(int i = 0 ; i < (int)str.size()+1 ; i++){
-		string sub = str.substr(0,i);
-		cout<<sub<<": "<<(INT::check_expression(sub)?"true":"false")<<endl;
-	}
-	cout<<INT::to_postfix(str)<<endl;
-	cout<<INT::parse(str)<<endl;
+//	for(int i = 0 ; i < (int)str.size()+1 ; i++){
+//		string sub = str.substr(0,i);
+//		cout<<sub<<": "<<(INT::check_expression(sub)?"true":"false")<<endl;
+//	}
+//	cout<<INT::to_postfix(str)<<endl;
+//	cout<<INT::parse(str)<<endl;
 //	cout<<"Actual result:"<<(8-9-8-5-1-2*5);
 //INT	a,b="1521",c;
 //	a = b + INT("789485454121215156");

@@ -10,6 +10,12 @@
 #include <cmath>
 #include <stack>
 
+//Private constructors
+INT::INT(char sign,vector<char> num){
+	this->sign = sign;
+	this->num = num;
+}
+
 //PRIVATE METHODS
 
 bool INT::compare(vector<char> a, vector<char> b){
@@ -852,6 +858,29 @@ INT INT::operator % (INT num1){
 	//removes the redundant zeros and assigns the reminder
 	reminder.num = clean(t);
 	return reminder;
+}
+
+INT INT::operator ++(){
+	int i = num.size()-1;
+	num[i] += 1;
+	while(num[i] > '9' && i > 0){
+		num[i-1]+= (num[i]-'0')/10;
+		num[i] = ((num[i]-'0')%10)+'0';
+		i--;
+	}
+	return INT(sign,num);
+}
+
+INT INT::operator ++(int){
+	INT a = INT(sign,num);
+	int i = num.size()-1;
+	num[i] += 1;
+	while(num[i] > '9' && i > 0){
+		num[i-1]+= (num[i]-'0')/10;
+		num[i] = ((num[i]-'0')%10)+'0';
+		i--;
+	}
+	return a;
 }
 
 INT INT::parse(string exp){
