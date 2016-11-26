@@ -16,11 +16,13 @@ using namespace std;
 int main() {
 	auto start = chrono::steady_clock::now();
 	/****************************************************************************************/
-	INT a = "1";
-	for(int i = 0; i < 15; i++){
-		cout<<a++<<endl;
-		cout<<a<<endl;
-	}
+	INT a = "+1";
+	cout<<a--<<endl;
+	cout<<a;
+//	for(int i = 0; i < 55; i++){
+//		cout<<"++a: "<<++a<<endl;
+//		cout<<"a  : "<<a<<endl;
+//	}
 //	INT a= "-99";
 //	INT b = "-1";
 //	cout<<((a>b)?"true":"false");

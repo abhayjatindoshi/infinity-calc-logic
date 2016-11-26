@@ -65,14 +65,17 @@ private:
 	//used too remove redundant zeros
 	vector<char> clean(vector<char> number);
 
+	//increment/decrement vector by 1
+	vector<char> increment(vector<char> number);
+	vector<char> decrement(vector<char> number);
+
 	//used with parse function
 	static bool is_operator(char ch);
 	static bool is_number(char ch);
 	static int priority(char c);
-//	static string to_postfix(string infix);
+	static string to_postfix(string infix);
 
 public:
-	static string to_postfix(string infix);
 	INT();
 	virtual ~INT();
 
@@ -112,8 +115,8 @@ public:
 	//Increment/Decrement operators
 	INT operator ++();
 	INT operator ++(int);
-//	INT operator --();
-//	INT operator --(int);
+	INT operator --();
+	INT operator --(int);
 
 	//parses a string expression
 	static INT parse(string exp);

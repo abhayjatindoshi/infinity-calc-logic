@@ -179,6 +179,51 @@ vector<char> INT::clean(vector<char> number){
 	return clean;
 }
 
+vector<char> INT::increment(vector<char> number){
+	/*
+	 * [26-11-2016]
+	 * used to increment the vector by one
+	 */
+	int i = number.size();
+
+	//inserts a number at the beginning for checking carry
+	number.insert(number.begin(),'0');
+
+	//increments by 1
+	number[i] += 1;
+
+	//checks for carry
+	while(number[i] > '9'){
+		number[i-1] += 1;
+		number[i] -= 10;
+		i--;
+	}
+
+	return clean(number);
+}
+
+vector<char> INT::decrement(vector<char> number){
+	/*
+	 * [26-11-2016]
+	 * DANGEROUS!! BE CAUTIOUS!!
+	 * used to decrement the vector by one
+	 * make sure the value of number is not zero
+	 */
+	int i = number.size()-1;
+
+	//decrements by 1
+	number[i] -= 1;
+
+	//checks for borrow
+	while(number[i] < '0'){
+		number[i-1] -= 1;
+		number[i] += 10;
+		i--;
+	}
+
+	return clean(number);
+}
+
 bool INT::is_operator(char ch){
 	/*
 	 * [19-11-2016]
@@ -861,26 +906,94 @@ INT INT::operator % (INT num1){
 }
 
 INT INT::operator ++(){
-	int i = num.size()-1;
-	num[i] += 1;
-	while(num[i] > '9' && i > 0){
-		num[i-1]+= (num[i]-'0')/10;
-		num[i] = ((num[i]-'0')%10)+'0';
-		i--;
+	/*
+	 * [26-11-2016] pre-increment operator
+	 */
+
+	//checks for sign
+	if(sign == '+'){
+		//increments positive number
+		num=increment(num);
+	}
+	else{
+		//decrements negative number
+		num=decrement(num);
+		//changes the sign to positive if number is zero
+		if(num.size()==1 && num[0] == '0') sign = '+';
 	}
 	return INT(sign,num);
 }
 
 INT INT::operator ++(int){
-	INT a = INT(sign,num);
-	int i = num.size()-1;
-	num[i] += 1;
-	while(num[i] > '9' && i > 0){
-		num[i-1]+= (num[i]-'0')/10;
-		num[i] = ((num[i]-'0')%10)+'0';
-		i--;
+	/*
+	 * [26-11-2016] post-increment operator
+	 */
+
+	//creates a copy to return
+	INT ret = INT(sign,num);
+	//checks the sign
+	if(sign == '+'){
+		//increments positive number
+		num = increment(num);
 	}
-	return a;
+	else{
+		//decrements negative number
+		num = decrement(num);
+		//changes the sign to positive if number is zero
+		if(num.size()==1 && num[0] == '0') sign = '+';
+	}
+	//returns the copy
+	return ret;
+}
+
+INT INT::operator --(){
+	/*
+	 * [26-11-2016] pre-decrement operator
+	 */
+
+	//checks if the number is zero and returns
+	if(num.size()== 1 && num[0] == '0'){
+		num[0] = '1';
+		sign = '-';
+		return INT(sign,num);
+	}
+	//checks for the sign
+	if(sign == '+'){
+		//decrements positive number
+		num = decrement(num);
+	}
+	else{
+		//increments negative number
+		num = increment(num);
+	}
+	return INT(sign,num);
+}
+
+INT INT::operator --(int){
+	/*
+	 * [26-11-2016] post-decrement number
+	 */
+
+	//makes a copy of variable to return
+	INT ret = INT(sign,num);
+
+	//checks if the number is zero and sets the number as -1
+	if(num.size()== 1 && num[0] == '0'){
+		num[0] = '1';
+		sign = '-';
+		return ret;
+	}
+
+	//checks the sign
+	if(sign == '+'){
+		//decrements positive number
+		num = decrement(num);
+	}
+	else{
+		//increments negative number
+		num = increment(num);
+	}
+	return ret;
 }
 
 INT INT::parse(string exp){
