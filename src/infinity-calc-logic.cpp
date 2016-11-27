@@ -16,9 +16,28 @@ using namespace std;
 int main() {
 	auto start = chrono::steady_clock::now();
 	/****************************************************************************************/
-	INT a = "+1";
-	cout<<a--<<endl;
-	cout<<a;
+	INT num1="-45313515465432435453";
+	INT num2="4643543545343545";
+	cout<<(num1*num2);
+//	string s1="",s2="";
+//	for(int i = 0 ; i < 4 ; i++){s1+='9';s2+='9';}
+//	INT a,b;
+//	a=s1;
+//	b=s2;
+//	cout<<a<<" "<<b<<endl;
+//	cout<<(a^b);
+//	cout<<int(1/-4);
+//	INT m;
+//	vector<char> a = {'4','4','2','1','3'};
+//	vector<char> b = {'1','2','5','6','9'};
+//	vector<char> a = {'9'};
+//	vector<char> b = {'9'};
+//	vector<char> c;
+//	c = m.multiply(a,b);
+//	cout<<"Pro:";for(char ch:c) cout<<ch; cout<<endl;
+//	INT a = "+1";
+//	cout<<a--<<endl;
+//	cout<<a;
 //	for(int i = 0; i < 55; i++){
 //		cout<<"++a: "<<++a<<endl;
 //		cout<<"a  : "<<a<<endl;
@@ -54,11 +73,24 @@ int main() {
 //	vector<int> c = a - b;
 //	for(int x:c) cout<<x<<" ";
 
+//	int dump;
+//	string s1="9",s2="9";
+//	for(int i = 0 ; i < 15 ; i++){s1+=s1;s2+=s2;}
 //	INT a,b;
-//	a="0";
-//	b="-8";
+//	a=s1;
+//	b=s2;
 //	cout<<"A:"<<a<<endl<<"B:"<<b<<endl;
-//	cout<<(a*b)<<" "<<(a/b);
+//	auto init = chrono::steady_clock::now();
+//	cout<<"Initial time: "<<chrono::duration<double, milli>(init-start).count()<<"ms"<<endl;
+//	cin>>dump;
+////	cout<<a.multiplication(b)<<endl;
+//	auto m1 = chrono::steady_clock::now();
+//	cout<<"Lattice time: "<<chrono::duration<double, milli>(m1-init).count()<<"ms"<<endl;
+//	cin>>dump;
+//	cout<<(a*b)<<endl;
+//	auto m2 = chrono::steady_clock::now();
+//	cout<<"Long time: "<<chrono::duration<double, milli>(m2-m1).count()<<"ms"<<endl;
+//	cin>>dump;
 
 //	INT a,b;
 //	string s1="9",s2="1";

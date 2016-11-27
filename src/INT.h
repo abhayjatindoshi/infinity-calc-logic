@@ -47,6 +47,17 @@ private:
 		}
 	} zero_divide;
 
+	/*
+	 * [26-11-2016]
+	 * limit_exceeded exception
+	 * to be thrown when program may exceeded limit
+	 */
+	class limit_exceeded: public exception{
+		virtual const char* what() const throw(){
+			return "Digits limits reached";
+		}
+	}limit_exceeded;
+
 	//private constructors
 	INT(char sign,vector<char> num);
 
@@ -62,10 +73,13 @@ private:
 	//[dangerous] subtracts two vectors
 	vector<char> subtract(vector<char> a, vector<char> b);
 
+	// multiplies two vectors
+	vector<char> multiply(vector<char> a, vector<char> b);
+
 	//used too remove redundant zeros
 	vector<char> clean(vector<char> number);
 
-	//increment/decrement vector by 1
+	//[dangerous] increment/decrement vector by 1
 	vector<char> increment(vector<char> number);
 	vector<char> decrement(vector<char> number);
 
@@ -76,6 +90,7 @@ private:
 	static string to_postfix(string infix);
 
 public:
+
 	INT();
 	virtual ~INT();
 
@@ -118,12 +133,18 @@ public:
 	INT operator --();
 	INT operator --(int);
 
+	//Exponent operator
+	INT operator ^ (INT num);
+
 	//parses a string expression
 	static INT parse(string exp);
 	//checks expression before parsing
 	static bool check_expression(string exp);
 
 	int length(){return num.size();}
+
+	//[deprecated] used for lattice_multiplication method
+	INT lattice_multiplication(INT num1);
 };
 
 #endif /* INT_H_ */

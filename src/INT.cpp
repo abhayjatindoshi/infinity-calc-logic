@@ -160,6 +160,43 @@ vector<char> INT::subtract(vector<char> a, vector<char> b){
 	return clean(ans);
 }
 
+vector<char> INT::multiply(vector<char> a, vector<char> b){
+	/*
+	 * [17-11-2016]
+	 * This function is created to multiply two vectors to use with
+	 * multiplication operator and exponent operator
+	 */
+
+	//using int vector because in char limits may exceed when carry occours
+	vector<int> ans(b.size()+1,0);
+	int k;
+
+	//long multiplication method
+	for(int i = 0 ; i < (int)a.size() ; i++){
+		for(int j = b.size()-1 ; j >= 0 ; j--){
+
+			//multiplying single digits
+			ans[i+j+1] += (a[i]-'0')*(b[j]-'0');
+
+			//processing carry if any exists
+			k = i+j+1;
+			//looping given since carry needs to be carried until it is freed
+			while(ans[k] > 9){
+				ans[k-1] += ans[k]/10;
+				ans[k] %= 10;
+				k--;
+			}
+		}
+		//adding a 0 at the end for multiplying with the next digit
+		if(i != (int)a.size()-1) ans.push_back(0);
+	}
+
+	//converting the vector<int> to vector<char> and removind redundant zeros
+	vector<char> pro;
+	for(int num:ans)pro.push_back(num+'0');
+	return clean(pro);
+}
+
 vector<char> INT::clean(vector<char> number){
 	/*
 	 * [18-11-2016]
@@ -725,44 +762,9 @@ INT INT::operator *(INT num1){
 	 * supports multiplication of numbers upto 32768 (2^15) digits
 	 */
 	INT product;
-	int i,j,k;
 
-	//declaring int vectors since in char type limits exceeds while calculations
-	vector<int> ans(num1.num.size()+1,0);
-	vector<int> a,b;
-
-	//initializing the vectors
-	for(i = 0; i < (int)num.size() ; i++) a.push_back(num[i]-'0');
-	for(i = 0; i < (int)num1.num.size() ; i++) b.push_back(num1.num[i]-'0');
-
-	//long multiplication method
-	for(i = 0 ;i <(int)a.size() ; i++){
-		for(j = b.size()-1 ; j>= 0 ;j--){
-
-			//multiplying single digits
-			ans[i+j+1] += a[i]*b[j];
-
-			//processing carry if any exists
-			k = i+j+1;
-			//looping given since the carry needs to be checked till the end
-			while(ans[k] > 9){
-				ans[k-1]+=ans[k]/10;
-				ans[k]%=10;
-				k--;
-			}
-		}
-
-		//adding a 0 at the end for multiplying with the next digit
-		if(i != (int)a.size()-1)
-			ans.push_back(0);
-	}
-
-	//clearing the previous data
-	product.num.clear();
-
-	//converting the vector<int> to vector<char> and removind redundant zeros
-	for(int i = 0; i < (int)ans.size() ; i++) product.num.push_back(ans[i]+'0');
-	product.num = clean(product.num);
+	//calling multiply function to multiply
+	product.num = multiply(num,num1.num);
 
 	//multiplying the sign
 	if(sign != num1.sign && product.num[0]!='0') product.sign='-';
@@ -905,6 +907,7 @@ INT INT::operator % (INT num1){
 	return reminder;
 }
 
+
 INT INT::operator ++(){
 	/*
 	 * [26-11-2016] pre-increment operator
@@ -996,6 +999,55 @@ INT INT::operator --(int){
 	return ret;
 }
 
+INT INT::operator ^ (INT num1){
+	/*
+	 * [26-11-2016]
+	 * operator ^ is used for exponential calculations
+	 * sometimes when limits are exceeded for further calculations it throws limit_exceeded
+	 */
+
+	string size ="";
+//	size += char(num.size());
+//	cout<<size<<endl;
+//	if(num1*INT(size) >= INT("268435456")) throw limit_exceeded;
+
+	//returns 1 if exponent is negative
+	if(num1.num.size() == 1 && num1.num[0] == '0') return INT("1");
+
+	//returns 0 if base is zero or/else throws zero_divide exception
+	if(num.size() == 1 && num[0] == '0'){
+		if(num1.sign == '+') return INT("0");
+		else throw zero_divide;
+	}
+
+	INT ans;
+
+	//setting the sign negative if there is a negative odd exponent
+	if(sign == '-' && (num1.num[num1.num.size()-1]-'0') % 2 != 0) ans.sign = '-';
+
+	//processes negative exponents
+	if(num1.sign == '-'){
+		//returns positive or negative 1 is base is 1
+		if(num.size() == 1 && num[0] == '1'){
+			ans.num[0] = '1';
+			return ans;
+		}
+		//returns 0 if base is not 1
+		else return INT("0");
+	}
+
+	//initializing ans to the number itself
+	ans.num = num;
+
+	//applying exponents
+	while(--num1 != INT("0")){
+		if(num1%INT("1000")==INT("0"))cout<<num1<<endl;
+		ans.num = multiply(ans.num,num);
+	}
+
+	return ans;
+}
+
 INT INT::parse(string exp){
 	/*
 	 * [19-11-2016]
@@ -1066,3 +1118,37 @@ INT INT::parse(string exp){
 	//final answer will be the only element in the stack
 	return ans[0];
 }
+
+/*
+ * [26-11-2016] multiplication lattice method
+ * deprecated
+ */
+//INT INT::lattice_multiplication(INT num1){
+//	INT product;
+//	vector<int> pro(num.size()+num1.num.size(),0);
+//	vector<vector<vector<int>>> matrix(num.size(), vector<vector<int>>(num1.num.size(), vector<int>(2)));
+//	for(int i = 0; i < (int) num.size(); i++){
+//		for(int j = 0 ; j < (int) num1.num.size(); j++){
+//			matrix[i][j][0] = (num[i]-'0') * (num1.num[j]-'0');
+//			matrix[i][j][1] = matrix[i][j][0] % 10;
+//			matrix[i][j][0] /= 10;
+//		}
+//	}
+//	for(int i = 0 ; i < (int) num.size() ; i++){
+//		for(int j = 0 ; j < (int) num1.num.size(); j++){
+//			pro[i+j] += matrix[i][j][0];
+//			pro[i+j+1] += matrix[i][j][1];
+//		}
+//	}
+//	int carry=0;
+//	for(int i = pro.size()-1 ; i >= 0; i--){
+//		pro[i]+=carry;
+//		carry = pro[i]/10;
+//		pro[i]%=10;
+//	}
+//	product.num.clear();
+//	for(int i:pro) product.num.push_back(i+'0');
+//	product.num = clean(product.num);
+//	if(sign != num1.sign && product.num[0]!='0') product.sign='-';
+//	return product;
+//}
