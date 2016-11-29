@@ -544,8 +544,14 @@ bool INT::operator > (INT num1){
 	if(sign == '-' && num1.sign == '+') return false;
 
 	//checks size
-	if(num.size() > num1.num.size()) return true;
-	if(num.size() < num1.num.size()) return false;
+	if(num.size() > num1.num.size()){
+		if(sign == '+') return true;
+		else return false;
+	}
+	if(num.size() < num1.num.size()){
+		if(sign  == '+') return false;
+		else return true;
+	}
 
 	//compares numbers
 	for(int i = 0 ; i < (int)num.size() ; i++){
@@ -579,8 +585,14 @@ bool INT::operator >= (INT num1){
 	if(sign == '-' && num1.sign == '+') return false;
 
 	//checks size
-	if(num.size() > num1.num.size()) return true;
-	if(num.size() < num1.num.size()) return false;
+	if(num.size() > num1.num.size()){
+		if(sign == '+') return true;
+		else return false;
+	}
+	if(num.size() < num1.num.size()){
+		if(sign  == '+') return false;
+		else return true;
+	}
 
 	//compares numbers
 	for(int i = 0 ; i < (int)num.size() ; i++){
@@ -614,8 +626,14 @@ bool INT::operator < (INT num1){
 	if(sign == '-' && num1.sign == '+') return true;
 
 	//checks size
-	if(num.size() > num1.num.size()) return false;
-	if(num.size() < num1.num.size()) return true;
+	if(num.size() > num1.num.size()){
+		if(sign == '+') return false;
+		else return true;
+	}
+	if(num.size() < num1.num.size()){
+		if(sign  == '+') return true;
+		else return false;
+	}
 
 	//compares numbers
 	for(int i = 0 ; i < (int)num.size() ; i++){
@@ -649,8 +667,14 @@ bool INT::operator <= (INT num1){
 	if(sign == '-' && num1.sign == '+') return true;
 
 	//checks size
-	if(num.size() > num1.num.size()) return false;
-	if(num.size() < num1.num.size()) return true;
+	if(num.size() > num1.num.size()){
+		if(sign == '+') return false;
+		else return true;
+	}
+	if(num.size() < num1.num.size()){
+		if(sign  == '+') return true;
+		else return false;
+	}
 
 	//compares numbers
 	for(int i = 0 ; i < (int)num.size() ; i++){
