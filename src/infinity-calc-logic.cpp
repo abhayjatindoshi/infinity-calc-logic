@@ -16,9 +16,13 @@ using namespace std;
 int main() {
 	auto start = chrono::steady_clock::now();
 	/****************************************************************************************/
-	INT num1="-45313515465432435453";
-	INT num2="4643543545343545";
-	cout<<(num1*num2);
+	INT num_array[5] = {"123","456","789","135","246"};
+	INT copy = num_array[2];
+	for(int i = 0; i < 5 ; i++) cout<<num_array[i]<<endl;
+	cout<<(num_array[0]+num_array[1]*num_array[4]);
+//	INT num1="-45313515465432435453";
+//	INT num2="4643543545343545";
+//	cout<<(num1*num2);
 //	string s1="",s2="";
 //	for(int i = 0 ; i < 4 ; i++){s1+='9';s2+='9';}
 //	INT a,b;
